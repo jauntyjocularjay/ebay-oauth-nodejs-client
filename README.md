@@ -60,7 +60,7 @@ Generate client credential token.
 ```js
 (async () => {
     // const env = 'SANDBOX' || 'PRODUCTION'
-    // as set above
+    // as set in the section EbayAuthToken(config)
     const token = await ebayAuthToken.getApplicationToken(env);
     console.log(token);
 })();
@@ -71,7 +71,7 @@ Generate user consent authorization url.
 ```js
 (() => {
     // const env = 'SANDBOX' || 'PRODUCTION'
-    // as set above
+    // as set in the section EbayAuthToken(config)
     const authUrl = ebayAuthToken.generateUserAuthorizationUrl(env, scopes);
     console.log(authUrl);
 })();
@@ -85,7 +85,7 @@ The method call above could also be done as
 ```js
 (() => {
     // const env = 'SANDBOX' || 'PRODUCTION'
-    // as set above
+    // as set in the section EbayAuthToken(config)
     const options = { state: 'custom-state-value', prompt: 'login' };
     const authUrl = ebayAuthToken.generateUserAuthorizationUrl(env, scopes, options);
     console.log(authUrl);
@@ -97,7 +97,7 @@ Getting a User access token.
 ```js
 (async () => {
     // const env = 'SANDBOX' || 'PRODUCTION'
-    // as set above
+    // as set in the section EbayAuthToken(config)
     const accessToken = await ebayAuthToken.exchangeCodeForAccessToken(env, code);
     console.log(accessToken);
 })();
@@ -108,7 +108,7 @@ Using a refresh token to update a User access token (Updating the expired access
 ```js
 (async () => {
     // const env = 'SANDBOX' || 'PRODUCTION'
-    // as set above
+    // as set in the section EbayAuthToken(config)
     const accessToken = await ebayAuthToken.getAccessToken(env, refreshToken, scopes);
     console.log(accessToken);
 })();
@@ -150,7 +150,7 @@ Create a config JSON file in your application. The config file should contain yo
         "devid": "-- dev id ---",
         "redirectUri": "-- redirect uri ---",
         "baseUrl": "api.sandbox.ebay.com", //don't change these values
-        "env": "SANDBOX"
+        "env": "SANDBOX" // Added for convenience
     },
     "PRODUCTION": {
         "clientId": "---Client Id---",
@@ -158,7 +158,7 @@ Create a config JSON file in your application. The config file should contain yo
         "devid": "-- dev id ---",
         "redirectUri": "-- redirect uri ---",
         "baseUrl": "api.ebay.com", //don't change these values
-        "env": "PRODUCTION"
+        "env": "PRODUCTION" // Added for convenience
     }
 }
 ```
