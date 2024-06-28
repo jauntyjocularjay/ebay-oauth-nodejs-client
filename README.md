@@ -45,10 +45,13 @@ Create a new instance of `EbayAuthToken` with a relevant config.
 ```js
 const EbayAuthToken = require('ebay-oauth-nodejs-client');
 
+const env = 'SANDBOX' || 'PRODUCTION'
+
 const ebayAuthToken = new EbayAuthToken({
     clientId: '<your_client_id>',
     clientSecret: '<your_client_secret>',
-    redirectUri: '<redirect uri>'
+    redirectUri: '<redirect uri>',
+    env: env // If omitted, the client will use 'PRODUCTION'
 });
 ```
 
@@ -56,7 +59,9 @@ const ebayAuthToken = new EbayAuthToken({
 Generate client credential token.
 ```js
 (async () => {
-    const token = await ebayAuthToken.getApplicationToken('PRODUCTION');
+    // const env = 'SANDBOX' || 'PRODUCTION'
+    // as set above
+    const token = await ebayAuthToken.getApplicationToken(env);
     console.log(token);
 })();
 ```
@@ -65,7 +70,9 @@ Generate client credential token.
 Generate user consent authorization url.
 ```js
 (() => {
-    const authUrl = ebayAuthToken.generateUserAuthorizationUrl('PRODUCTION', scopes);
+    // const env = 'SANDBOX' || 'PRODUCTION'
+    // as set above
+    const authUrl = ebayAuthToken.generateUserAuthorizationUrl(env, scopes);
     console.log(authUrl);
 })();
 ```
@@ -77,8 +84,10 @@ You can also provide optional values:\
 The method call above could also be done as
 ```js
 (() => {
+    // const env = 'SANDBOX' || 'PRODUCTION'
+    // as set above
     const options = { state: 'custom-state-value', prompt: 'login' };
-    const authUrl = ebayAuthToken.generateUserAuthorizationUrl('PRODUCTION', scopes, options);
+    const authUrl = ebayAuthToken.generateUserAuthorizationUrl(env, scopes, options);
     console.log(authUrl);
 })();
 ```
@@ -87,7 +96,9 @@ The method call above could also be done as
 Getting a User access token.
 ```js
 (async () => {
-    const accessToken = await ebayAuthToken.exchangeCodeForAccessToken('PRODUCTION', code);
+    // const env = 'SANDBOX' || 'PRODUCTION'
+    // as set above
+    const accessToken = await ebayAuthToken.exchangeCodeForAccessToken(env, code);
     console.log(accessToken);
 })();
 ```
@@ -96,7 +107,9 @@ Getting a User access token.
 Using a refresh token to update a User access token (Updating the expired access token).
 ```js
 (async () => {
-    const accessToken = await ebayAuthToken.getAccessToken('PRODUCTION', refreshToken, scopes);
+    // const env = 'SANDBOX' || 'PRODUCTION'
+    // as set above
+    const accessToken = await ebayAuthToken.getAccessToken(env, refreshToken, scopes);
     console.log(accessToken);
 })();
 ```
@@ -115,7 +128,8 @@ OR
 const ebayAuthToken = new EbayAuthToken({
     clientId: '<your_client_id>',
     clientSecret: '<your_client_secret>',
-    redirectUri: '<redirect_uri_name>'
+    redirectUri: '<redirect_uri_name>',
+    env: 'SANDBOX' || 'PRODUCTION'
 });
 ```
 2. If you want to get your application credentials such as AppId, DevId, and CertId. Refer to [Creating eBay Developer Account](https://developer.ebay.com/api-docs/static/creating-edp-account.html) for details on how to get these credentials.
@@ -135,14 +149,16 @@ Create a config JSON file in your application. The config file should contain yo
         "clientSecret": "--- client secret---",
         "devid": "-- dev id ---",
         "redirectUri": "-- redirect uri ---",
-        "baseUrl": "api.sandbox.ebay.com" //don't change these values
+        "baseUrl": "api.sandbox.ebay.com", //don't change these values
+        "env": "SANDBOX"
     },
     "PRODUCTION": {
         "clientId": "---Client Id---",
         "clientSecret": "--- client secret---",
         "devid": "-- dev id ---",
         "redirectUri": "-- redirect uri ---",
-        "baseUrl": "api.ebay.com" //don't change these values
+        "baseUrl": "api.ebay.com", //don't change these values
+        "env": "PRODUCTION"
     }
 }
 ```
